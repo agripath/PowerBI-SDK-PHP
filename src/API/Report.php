@@ -57,13 +57,17 @@ class Report
      *
      * @return \Tngnt\PBI\Response
      */
-    public function getReportEmbedToken($reportId, $groupId, $accessLevel = 'view')
+    public function getReportEmbedToken($reportId, $groupId, $accessLevel = 'view', $identities = null)
     {
         $url = sprintf(self::GROUP_REPORT_EMBED_URL, $groupId, $reportId);
 
         $body = [
             'accessLevel' => $accessLevel,
         ];
+        
+        if ($identities) {
+          $body['identities'] = $identities;
+        }
 
         $response = $this->client->request(Client::METHOD_POST, $url, $body);
 
